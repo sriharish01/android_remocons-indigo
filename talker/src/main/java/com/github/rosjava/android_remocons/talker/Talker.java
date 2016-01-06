@@ -22,7 +22,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-
+import android.view.Display;
 
 import java.io.IOException;
 import java.util.ArrayList;
