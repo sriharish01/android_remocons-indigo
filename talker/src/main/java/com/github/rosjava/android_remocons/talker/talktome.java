@@ -51,6 +51,7 @@ import geometry_msgs.Vector3;
             final Publisher publisher1 = connectedNode.newPublisher("gyroscope","geometry_msgs/Vector3");
             final Publisher publisher2 = connectedNode.newPublisher("magnetometer","geometry_msgs/Vector3");
             final Publisher publisher3 = connectedNode.newPublisher("Orientation","geometry_msgs/Vector3");
+            final Publisher publisher4 = connectedNode.newPublisher("GPS","geometry_msgs/Vector3");
 
             connectedNode.executeCancellableLoop(new CancellableLoop() {
 
@@ -65,6 +66,8 @@ import geometry_msgs.Vector3;
                     geometry_msgs.Vector3 vect1 = (Vector3)publisher1.newMessage();
                     geometry_msgs.Vector3 vect2 = (Vector3)publisher2.newMessage();
                     geometry_msgs.Vector3 vect3 = (Vector3)publisher3.newMessage();
+                    geometry_msgs.Vector3 vect4 = (Vector3)publisher4.newMessage();
+
 
 
 
@@ -84,10 +87,16 @@ import geometry_msgs.Vector3;
                     vect3.setY((double)roll);
                     vect3.setZ((double)yaw);
 
+                    vect4.setX(lati1);
+                    vect4.setY(longi1);
+                    vect4.setZ(alti1);
+
                     publisher.publish(vect);
                     publisher1.publish(vect1);
                     publisher2.publish(vect2);
                     publisher3.publish(vect3);
+                    publisher4.publish(vect4);
+
                     Thread.sleep(200L);
                 }
             });
