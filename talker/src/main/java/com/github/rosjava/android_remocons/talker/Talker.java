@@ -86,7 +86,7 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
             if (rosCameraPreviewView.getHeight() == -1 || rosCameraPreviewView.getWidth() == -1) {
                 handy.postDelayed(this, 100);
             } else {
-
+/*
                 List<Camera.Size> sizes = parameters.getSupportedPictureSizes();
                 for (Camera.Size size : sizes) {
                     Log.i("TaG", "Available resolution: " + size.width + " " + size.height);
@@ -100,10 +100,12 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
 
 
                 Log.i("TaG", "Chosen resolution: " + mSize.width + " " + mSize.height);
+                mSize.width=640;
+                mSize.height=480;
                 parameters.setPictureSize(mSize.width, mSize.height);
                 //camera.setDisplayOrientation(90);
                 camera.setParameters(parameters);
-
+*/
                 rosCameraPreviewView.setCamera(camera);
             }
         }
@@ -119,14 +121,10 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
         setMainWindowResource(R.layout.main);
         super.onCreate(savedInstanceState);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensor = sensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD).get(0);
-        sensor1 = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-        sensor215 = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+      //  sensor = sensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD).get(0);
+      //  sensor1 = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+       // sensor215 = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         sensor4 = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).get(0);
-        if (sensor215 == null) {
-            TextView text2 = (TextView) findViewById(R.id.textView2);
-            text2.setText("Gyrometer not avaiable");
-        }
         camerasize = new String[camsize.size()];
         camsize.toArray(camerasize);
         rosCameraPreviewView = (RosCameraPreviewView) findViewById(R.id.camview);
@@ -239,9 +237,6 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(accelerationListener, sensor, SensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(accelerationListener, sensor1, SensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(accelerationListener, sensor215, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(accelerationListener,sensor4,SensorManager.SENSOR_DELAY_GAME);
 
         checkPlayServices();
@@ -277,28 +272,8 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
         @Override
         public void onSensorChanged(SensorEvent event) {
             Sensor sensor3 = event.sensor;
-            if (sensor3.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-                x = event.values[0];
-                y = event.values[1];
-                z = event.values[2];
 
-                refreshDisplay();
-            } else if (sensor3.getType() == Sensor.TYPE_ACCELEROMETER) {
-                xx = event.values[0];
-                yy = event.values[1];
-                zz = event.values[2];
-
-                refreshDisplay1();
-
-            } else if (sensor3.getType() == Sensor.TYPE_GYROSCOPE) {
-                //else {
-
-                xxx = event.values[0];
-                yyy = event.values[1];
-                zzz = event.values[2];
-
-                refreshDisplay2();}
-                else if (sensor3.getType() == Sensor.TYPE_ORIENTATION) {
+                if (sensor3.getType() == Sensor.TYPE_ORIENTATION) {
                     //else {
 
                     yaw = event.values[0];
@@ -328,51 +303,14 @@ private SensorEventListener sensorEventListener = new SensorEventListener()
     }
 };*/
 
-        private void refreshDisplay() {
-            if (true) {
-                String output = String.format("X:%3.2f u tesla  |  Y:%3.2f u tesla  |   Z:%3.2f u tesla ", x, y, z);
-                //String output1 = String.format("Latitude:%3.2f   |  Longitude:%3.2f   |   Altitude:%3.2f  ", lati, longi, alti);
-                TextView text = (TextView) findViewById(R.id.textview1);
-                //TextView text1 =(TextView) findViewById(R.id.textView2);
-                text.setText(output);
-                //text1.setText(output1);
 
-                talker.fun(x, y, z);
-
-
-            }
-        }
-
-        private void refreshDisplay1() {
-            if (true) {
-                String output1 = String.format("X:%3.2f  m/s^2|  Y:%3.2f m/s^2  |   Z:%3.2f m/s^2 ", xx, yy, zz);
-
-                TextView text1 = (TextView) findViewById(R.id.textView);
-                text1.setText(output1);
-                talker.fun1(xx, yy, zz);
-
-
-            }
-        }
-
-        private void refreshDisplay2() {
-            if (true) {
-                String output2 = String.format("X:%3.2f  rad/s|  Y:%3.2f rad/s  |   Z:%3.2f rad/s ", xxx, yyy, zzz);
-
-                TextView text2 = (TextView) findViewById(R.id.textView2);
-                text2.setText(output2);
-                talker.fun3(xxx, yyy, zzz);
-
-
-            }
-        }
 
         private void refreshDisplay3() {
             if (true) {
                 String output2 = String.format("X:%3.2f  |  Y:%3.2f  |   Z:%3.2f  ", pitch, roll, yaw);
 
-                TextView text2 = (TextView) findViewById(R.id.textView7);
-                text2.setText(output2);
+             //   TextView text2 = (TextView) findViewById(R.id.textView7);
+                //text2.setText(output2);
                 talker.fun4(pitch, roll, yaw);
                 displayLocation();
 
@@ -383,19 +321,19 @@ private SensorEventListener sensorEventListener = new SensorEventListener()
 
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        TextView myLocationText = (TextView) findViewById(R.id.textView9);
+      //  TextView myLocationText = (TextView) findViewById(R.id.textView9);
 
         if (mLastLocation != null) {
             double lat = mLastLocation.getLatitude();
             double lng = mLastLocation.getLongitude();
             double alt = mLastLocation.getSpeed();
             String latLongString = "Lat:" + lat + "\nLong:" + lng;
-            myLocationText.setText(latLongString);
+           // myLocationText.setText(latLongString);
             talker.fun2(lat,lng,alt);
 
         } else {
 
-            myLocationText.setText("(Couldn't get the location. Make sure location is enabled on the device)");
+           // myLocationText.setText("(Couldn't get the location. Make sure location is enabled on the device)");
         }
     }
 
