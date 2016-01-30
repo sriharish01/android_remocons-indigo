@@ -237,7 +237,7 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(accelerationListener,sensor4,SensorManager.SENSOR_DELAY_GAME);
+       sensorManager.registerListener(accelerationListener, sensor4, SensorManager.SENSOR_DELAY_GAME);
 
         checkPlayServices();
         if (mGoogleApiClient.isConnected() )
@@ -248,14 +248,22 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
 
     @Override
     protected void onStop() {
-        sensorManager.unregisterListener(accelerationListener);
-        if (mGoogleApiClient.isConnected())
-        {
-            mGoogleApiClient.disconnect();
-        }
+       // sensorManager.unregisterListener(accelerationListener);
+       // if (mGoogleApiClient.isConnected())
+        //{
+        //    mGoogleApiClient.disconnect();
+       // }
         super.onStop();
     }
-
+    @Override
+    protected void onDestroy(){
+        sensorManager.unregisterListener(accelerationListener);
+    if (mGoogleApiClient.isConnected())
+    {
+        mGoogleApiClient.disconnect();
+     }
+        super.onDestroy();
+    }
 
     protected void startLocationUpdates() {
 
