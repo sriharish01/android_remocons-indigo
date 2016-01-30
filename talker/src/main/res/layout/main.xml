@@ -15,7 +15,7 @@
 
     </LinearLayout>
 
-    <org.ros.android.view.camera.RosCameraPreviewView
+    <com.github.rosjava.android_remocons.talker.RosCameraPreviewView1
         android:id="@+id/camview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

@@ -15,7 +15,7 @@ import com.github.rosjava.android_remocons.common_tools.apps.RosAppActivity;
 
 import org.ros.android.MessageCallable;
 import org.ros.android.view.RosTextView;
-import org.ros.android.view.camera.RosCameraPreviewView;
+//import org.ros.android.view.camera.RosCameraPreviewView;
 import org.ros.node.ConnectedNode;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
@@ -40,7 +40,7 @@ import com.google.android.gms.location.LocationServices;
 public class Talker extends RosAppActivity implements ConnectionCallbacks, OnConnectionFailedListener,LocationListener
 {
     private int cameraId = 0;
-    private RosCameraPreviewView rosCameraPreviewView;
+    private RosCameraPreviewView1 rosCameraPreviewView;
     private Handler handy = new Handler();
     Camera.Size mSize;
     List<String> camsize = new ArrayList<String>();
@@ -127,7 +127,7 @@ public class Talker extends RosAppActivity implements ConnectionCallbacks, OnCon
         sensor4 = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).get(0);
         camerasize = new String[camsize.size()];
         camsize.toArray(camerasize);
-        rosCameraPreviewView = (RosCameraPreviewView) findViewById(R.id.camview);
+        rosCameraPreviewView = (RosCameraPreviewView1) findViewById(R.id.camview);
         camera.setDisplayOrientation(90);
 
 
