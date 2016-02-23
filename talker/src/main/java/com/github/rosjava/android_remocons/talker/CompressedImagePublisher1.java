@@ -54,7 +54,7 @@ public class CompressedImagePublisher1 implements RawImageListener1 {
         image.setFormat("jpeg");
         image.getHeader().setStamp(currentTime);
         image.getHeader().setFrameId(frameId);
-        Preconditions.checkState(this.yuvImage.compressToJpeg(this.rect, 100, this.stream));
+        Preconditions.checkState(this.yuvImage.compressToJpeg(this.rect, 50, this.stream));
         image.setData(this.stream.buffer().copy());
         this.stream.buffer().clear();
         this.imagePublisher.publish(image);
