@@ -1,4 +1,7 @@
 package com.github.rosjava.android_remocons.listener;
+import org.ros.android.BitmapFromCompressedImage;
+import org.ros.android.BitmapFromImage;
+import org.ros.android.view.RosImageView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +24,7 @@ public class Listener extends RosAppActivity
     private Toast    lastToast;
     private ConnectedNode node;
     private RosTextView<std_msgs.String> rosTextView;
+    private RosImageView<sensor_msgs.CompressedImage> rosImageView;
 
     public Listener()
     {
@@ -41,7 +45,14 @@ public class Listener extends RosAppActivity
     protected void init(NodeMainExecutor nodeMainExecutor)
     {
         String chatterTopic = remaps.get(getString(R.string.chatter_topic));
+        String camtopic =remaps.get("camera/image/compressed");
         super.init(nodeMainExecutor);
+        rosImageView = (RosImageView<sensor_msgs.CompressedImage>)findViewById(R.id.camview);
+        rosImageView.setTopicName(camtopic);
+        rosImageView.setMessageType("sensor_msgs/CompressedImage");
+        rosImageView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
+
+
 
         rosTextView = (RosTextView<std_msgs.String>) findViewById(R.id.text);
         rosTextView.setTopicName(getMasterNameSpace().resolve(chatterTopic).toString());
@@ -63,6 +74,7 @@ public class Listener extends RosAppActivity
             NodeConfiguration nodeConfiguration =
                     NodeConfiguration.newPublic(local_network_address.getHostAddress(), getMasterUri());
             nodeMainExecutor.execute(rosTextView, nodeConfiguration);
+            nodeMainExecutor.execute(rosImageView,nodeConfiguration);
         } catch(InterruptedException e) {
             // Thread interruption
         } catch (IOException e) {
