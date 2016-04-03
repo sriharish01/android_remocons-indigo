@@ -49,6 +49,7 @@ import geometry_msgs.Vector3;
             Looper.prepare();
             final Publisher publisher3 = connectedNode.newPublisher("Orientation","geometry_msgs/Vector3");
             final Publisher publisher4 = connectedNode.newPublisher("GPS","geometry_msgs/Vector3");
+            final Publisher publisher5 = connectedNode.newPublisher("LatLng","std_msgs/String");
 
             connectedNode.executeCancellableLoop(new CancellableLoop() {
 
@@ -61,23 +62,25 @@ import geometry_msgs.Vector3;
 
                     geometry_msgs.Vector3 vect3 = (Vector3)publisher3.newMessage();
                     geometry_msgs.Vector3 vect4 = (Vector3)publisher4.newMessage();
-
+                    std_msgs.String latlng =(std_msgs.String )publisher5.newMessage();
 
 
 
 
 
                     vect3.setX((double)pitch);
-                    vect3.setY((double)roll);
-                    vect3.setZ((double)yaw);
+                    vect3.setY((double) roll);
+                    vect3.setZ((double) yaw);
 
                     vect4.setX(lati1);
                     vect4.setY(longi1);
                     vect4.setZ(alti1);
 
+                    latlng.setData(String.valueOf(lati1)+","+String.valueOf(longi1));
 
                     publisher3.publish(vect3);
                     publisher4.publish(vect4);
+                    publisher5.publish(latlng);
 
                     Thread.sleep(200L);
                 }

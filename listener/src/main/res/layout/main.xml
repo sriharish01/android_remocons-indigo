@@ -10,19 +10,36 @@
         android:layout_height="wrap_content"
         android:background="#ff404040"
         android:gravity="right"
-        android:layout_gravity="right">
+        android:orientation="horizontal"
+        android:weightSum="1">
+
     </LinearLayout>
+
     <org.ros.android.view.RosTextView
         android:id="@+id/text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="30dip"
         android:layout_gravity="right" />
+    <org.ros.android.view.RosTextView
+        android:id="@+id/text1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dip"
+        android:layout_gravity="right" />
+
     <org.ros.android.view.RosImageView
         android:id="@+id/camview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="400dp"
         android:layout_gravity="right" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Map"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
 
